@@ -1,4 +1,4 @@
-import { LOAD_OWL_STRING } from '../constants/ActionTypes'
+import * as types from '../constants/ActionTypes'
 
 const initialState = {
   loadedString: "",
@@ -7,8 +7,10 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOAD_OWL_STRING:
+    case types.LOAD_OWL_STRING:
       return {...state, loadedString: action.owlString}
+    case types.SAVE_JSON_OWL:
+      return {...state, loadedJSON: action.owlJSON}
     default:
       return state
   }

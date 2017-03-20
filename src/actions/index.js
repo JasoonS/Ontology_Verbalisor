@@ -6,9 +6,10 @@ export const loadOwlString = owlString => (dispatch) => {
       type: types.LOAD_OWL_STRING,
       owlString
     })
-    parseString(owlString, function (err, result) {
-      console.log(JSON.stringify(result))
-      console.log(result)
-      console.log('yeeeah')
+    parseString(owlString, function (err, owlJSON) {
+      dispatch({
+        type: types.SAVE_JSON_OWL,
+        owlJSON
+      })
     });
 }
