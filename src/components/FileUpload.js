@@ -14,7 +14,7 @@ const FileUpload  = ({uploadFileFunction}) => {
 		reader.readAsText(selectedFile)
   }
   return (
-    <div>
+    <div className="center-div">
       <h3>Your File Upload Button</h3>
         <input id='owl-upload' type='file' accept='.owl'
         onChange={fileUpload}

@@ -5,24 +5,30 @@ import { loadOwlString } from '../actions'
 
 const App = ({ loadOwlString, loadedString }) => {
   return (
+
     <div className="entire-window">
-      <h2>OWL english translator</h2>
+      <h1 className="center-div">OWL English Translator</h1>
       <div className="container">
         <div className="half-section left-pannel">
-        <h2>Original OWL</h2>
-        <div className="scroll-box">
-          <pre>
-            {loadedString}
-          </pre>
-        </div>
-        <FileUpload className ="bottom" uploadFileFunction={loadOwlString}/>
+        <h2 className="center-div">Original OWL</h2>
+          <div className="scroll-box">
+            <pre>
+              {loadedString}
+            </pre>
+          </div>
+        <FileUpload className ="bottom center-div" uploadFileFunction={loadOwlString}/>
         </div>
         <div className="half-section right-pannel">
-        <h2>OWL translation</h2>
+        <h2 className="center-div">OWL to ACE Translation</h2>
         </div>
       </div>
     </div>
 )}
+
+document.body.style.backgroundColor = "#2F3241";
+document.body.style.color ="#F9EFC1";
+document.body.style.fontFamily = "sans-serif";
+//document.getElementsByClassName("center-div").style.margin ="auto";
 
 App.propTypes = {
   loadOwlString: PropTypes.func.isRequired
