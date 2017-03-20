@@ -7,8 +7,8 @@ export const loadOwlString = owlString => (dispatch) => {
       owlString
     })
     parseString(owlString, function (err, result) {
-      console.log(JSON.stringify(result));
-      console.log(result);
+      console.log(JSON.stringify(result))
+      console.log(result)
       console.log('yeeeah')
     });
 }

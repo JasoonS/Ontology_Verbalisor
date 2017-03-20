@@ -10,9 +10,11 @@ const App = ({ loadOwlString, loadedString }) => {
       <div className="container">
         <div className="half-section left-pannel">
         <h2>Original OWL</h2>
-        <pre>
-          {loadedString}
-        </pre>
+        <div className="scroll-box">
+          <pre>
+            {loadedString}
+          </pre>
+        </div>
         <FileUpload className ="bottom" uploadFileFunction={loadOwlString}/>
         </div>
         <div className="half-section right-pannel">

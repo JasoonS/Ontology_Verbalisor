@@ -14,20 +14,10 @@ const FileUpload  = ({uploadFileFunction}) => {
 
 		reader.readAsText(selectedFile)
   }
-  const exampleImageInput = {
-    cursor: 'pointer',
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    right: 0,
-    left: 0,
-    width: '100%',
-    opacity: 0,
-  }
   return (
     <div>
       <h3>Your File Upload Button</h3>
-        <input id='owl-upload' type='file' accept='.owl' style={exampleImageInput}
+        <input id='owl-upload' type='file' accept='.owl'
         onChange={fileUpload}
         />
     </div>

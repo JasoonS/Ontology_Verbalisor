@@ -2,5 +2,11 @@
   position: relative;
   width: 50%;
   display: inline-block;
-  float: left
+  float: left;
+  max-height: 500px;
+}
+
+.scroll-box {
+  overflow: scroll;
+  max-height: 500px;
 }
