@@ -5,7 +5,7 @@ import { loadOwlString } from '../actions'
 
 const App = ({ loadOwlString, loadedString }) => {
   return (
-    <div>
+    <div className="entire-window">
       <h2>OWL english translator</h2>
       <div className="container">
         <div className="half-section left-pannel">

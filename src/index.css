@@ -10,3 +10,7 @@
   overflow: scroll;
   max-height: 500px;
 }
+
+.entire-window {
+  background-color:#333;
+}
