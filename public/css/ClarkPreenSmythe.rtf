@@ -1,0 +1,38 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf210
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww16880\viewh9900\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+
+\f0\b\fs28 \cf0 ontology
+\b0 \
+\
+- no proper IRI\
+- ALCRIF(D)\
+- good use of annotations\
+- an own goal is different from a goal keeper making a goal: in desperate times, the goalkeeper joins the rest of the team on the field, and can make a goal (ball in goal of opponent team, scoring a point). Sometimes (non-goalkeepers or goalkeeper) team mates are clumsy and shoot into the goal of their own team (which is the own goal).\
+- an amazing_shot is not an instance, but a class, presumably (i.e., there\'92s more than one amazing shot since the inception of playing soccer). likewise, Concussion is a class (and surely Standown will treat more than one of those); the one that Cris_Martin has is an instance (and likewise for the other types of injury).\
+- player number for inferencing is not how classification of classes is intended in ontologies (it is a dirty hack and for decision support systems, actually); using object properties describing what they are, is. Like that a striker is positioned at the front near the opponent\'92s goal, the one that is (mostly/supposed to be) making the goals.\
+- Instead of using true/false like in some decision support system, one would have a class Referee, a class Goal, and an object property awards. not a canAwardGoal true/false.\
+- Staff is already declared to be a Manager or Physio (i.e., a covering constraint), and they are disjoint, so saying that Manager is \'93Staff and (not (Physio))\'94 is already entailed in the ontology.\
+- Supporter is already declared disjoint with Player, Staff, and Referee, so there\'92s not much point by defining it as being not those, as you get that for free already, and ontologically, something is not defined by what it is not. Cucumber is not a Player, Staff, and Referee, yet it surely is not a Supporter either (but according to your definition, it can be). What are the features/attributes/properties of supporters? That they support at least one team, so there ought to have been an axiom stating that.\
+- hasInjury as functional, i.e., as having at most one injury? they could have more than one.\
+- Juergen Klopp is declared both manager and staff, but by declaring him Manager, he\'92s inferred to be staff, so the latter is redundant to assert.\
+- see general comment on inverses \
+- no classification of classes demonstrated\
+\
+
+\b write-up
+\b0 \
+\
+- there are other soccer ontologies online. what about those?\
+- \'93
+\fs22 such\'86as\'86transitive\'a8\'86reflexive\'a8\'86asymmetric\'86and\'86inverse\'86relations
+\fs28 \'94: none of them is transitive. none reflexive (neither globally nor locally). no effects of them has been discussed\
+- this is supposed to be a scientific write up, not flowery prose with so-called weasel words \
+- interesting touch on inclusion of the conceptualisation stage (the photos of the diagrams)\
+- some discussion on modelling issues and language limitations\
+- missing TBox inferencing\
+- references flimsy\
+\
+grade: 48}

@@ -1,0 +1,6 @@
+.half-section {
+  position: relative;
+  width: 50%;
+  display: inline-block;
+  float: left
+}
