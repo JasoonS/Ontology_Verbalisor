@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import FileUpload from '../components/FileUpload'
+import Verbalised from './Verbalised'
 import { loadOwlString } from '../actions'
 
 const App = ({ loadOwlString, loadedString }) => {
@@ -19,7 +20,8 @@ const App = ({ loadOwlString, loadedString }) => {
         <FileUpload className ="bottom center-div" uploadFileFunction={loadOwlString}/>
         </div>
         <div className="half-section right-pannel">
-        <h2 className="center-div">OWL to ACE Translation</h2>
+          <h2 className="center-div">OWL to ACE Translation</h2>
+          <Verbalised/>
         </div>
       </div>
     </div>

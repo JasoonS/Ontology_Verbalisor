@@ -11,6 +11,8 @@ const reducer = (state = initialState, action) => {
       return {...state, loadedString: action.owlString}
     case types.SAVE_JSON_OWL:
       return {...state, loadedJSON: action.owlJSON}
+    case types.SET_CLASS_DATA:
+      return {...state, classData: action.classData}
     default:
       return state
   }
