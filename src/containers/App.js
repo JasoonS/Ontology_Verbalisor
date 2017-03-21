@@ -5,6 +5,18 @@ import Verbalised from './Verbalised'
 import { loadOwlString } from '../actions'
 
 const App = ({ loadOwlString, loadedString }) => {
+
+  const tospeech = () => {
+
+      console.log("button works");
+      var x= document.getElementsByClassName("verbalised-text")[0].innerText
+      console.log(typeof x)
+      console.log(x)
+      var msg = new SpeechSynthesisUtterance(x);
+      window.speechSynthesis.speak(msg);
+      console.log("This code is reached");
+  }
+
   return (
 
     <div className="entire-window">
@@ -17,11 +29,13 @@ const App = ({ loadOwlString, loadedString }) => {
               {loadedString}
             </pre>
           </div>
-        <FileUpload className ="bottom center-div" uploadFileFunction={loadOwlString}/>
+        <FileUpload className="bottom center-div" uploadFileFunction={loadOwlString}/>
         </div>
         <div className="half-section right-pannel">
           <h2 className="center-div">OWL to ACE Translation</h2>
           <Verbalised/>
+          <button onClick={tospeech}>
+          the speech button </button>
         </div>
       </div>
     </div>
