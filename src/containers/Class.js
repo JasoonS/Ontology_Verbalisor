@@ -1,19 +1,20 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { removeAndSomething } from '../util'
+import Quantifier from '../components/ClassProperties/Quantifier'
 
-const Class  = ({ classData, displayClass }) => {
+const Class  = ({ classData, displayClass, extra }) => {
   if (typeof displayClass == 'string') {
     return <span>{displayClass}</span>
   } else {
-    console.log('display class', displayClass)
     for (let type in displayClass) {
       switch(type) {
         case 'ObjectIntersectionOf':
-          const hideAndSomething = removeAndSomething
-          return <span>{displayClass[type][0]} {hideAndSomething? '' : 'and'} bla bla</span>
+          const hideAndSomething = !removeAndSomething(displayClass[type])
+          return <span>{displayClass[type][0]} {hideAndSomething? '' : 'and '}<Class classData={classData} displayClass={displayClass[type][1]} extra={hideAndSomething}/></span>
+        case 'ObjectSomeValuesFrom':
+          return <Quantifier partOfStatement={extra} quantifierObj={displayClass} />
         default:
-          console.log('the wrong thingy')
           return <span>COMPOUND_CONCEPT</span>
       }
     }

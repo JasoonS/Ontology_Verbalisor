@@ -20,7 +20,7 @@ export const dealWithConcepts = (conceptJSON, individuals, relations) => {
               relations[conceptJSON.ObjectSomeValuesFrom[i].ObjectProperty[0].$] = conceptJSON.ObjectSomeValuesFrom[i].ObjectProperty[0]
               someValuesFrom.ObjectProperty = conceptJSON.ObjectSomeValuesFrom[i].ObjectProperty[0].$
             } else if (prop === 'Class'){
-              someValuesFrom[prop] = conceptJSON.ObjectSomeValuesFrom[i][prop][0].$
+              someValuesFrom[prop] = conceptJSON.ObjectSomeValuesFrom[i][prop][0].$.abbreviatedIRI
             } else {
               someValuesFrom[prop] = dealWithConcepts(conceptJSON.ObjectSomeValuesFrom[i][prop][0])
             }
