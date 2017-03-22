@@ -3,20 +3,20 @@ import Class from '../containers/Class'
 
 const ClassSentence  = ({ classInfo }) => {
   const {properties} = classInfo
-  const numProps = Object.keys(properties).length
+  const numProps = properties ? Object.keys(properties).length : 0
   const classSentences = properties ?
     Object.keys(properties).map(( propertyName, index ) => {
 
       switch(propertyName) {
         case 'SubClassOf':
           return properties.SubClassOf.map((concept, i) =>
-            <p key={index + i*numProps}>Every {classInfo.abbreviatedIRI} is a <Class displayClass={concept}/>.</p>
+            <p key={index + i*numProps}>Every <Class displayClass={classInfo.abbreviatedIRI}/> is a <Class displayClass={concept}/>.</p>
           )
         default:
           return <p key={index}>We cannot recognise the definition of {propertyName} on {classInfo.abbreviatedIRI}</p>
       }
     })
-     : <p>There seems to be an error, the class</p>
+     : <span/>
   return (
     <div>
       {classSentences}

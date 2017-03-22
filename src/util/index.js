@@ -12,3 +12,8 @@ export const removeAndSomething = (concept) => {
     }
   }
 }
+
+export const getClassAlias = (originalString) => {
+  const splitStr = originalString.split(':')
+  return splitStr[1]
+}
