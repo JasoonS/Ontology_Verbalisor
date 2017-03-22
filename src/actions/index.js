@@ -12,9 +12,6 @@ export const setupClass = (classToSet, classData) => {
 
   if (!classData[classToSetName].properties)
     classData[classToSetName].properties = {}
-
-  if (!classData[classToSetName].properties['SubClassOf'])
-    classData[classToSetName].properties['SubClassOf'] = []
 }
 
 export const dealWithConcepts = (conceptJSON, classData, individuals, relations) => {
@@ -69,6 +66,9 @@ export const getSubClassDetails = (subClasses, classData, individuals, relations
     setupClass(subClasses[i].Class[0].$, classData)
     let classOneName = subClasses[i].Class[0].$.abbreviatedIRI
 
+    if (!classData[classOneName].properties['SubClassOf'])
+      classData[classOneName].properties['SubClassOf'] = []
+
     if (subClasses[i].Class.length > 1) {
       classData[classOneName].properties['SubClassOf'].push(subClasses[i].Class[1].$.abbreviatedIRI)
       setupClass(subClasses[i].Class[1].$, classData)
@@ -78,14 +78,12 @@ export const getSubClassDetails = (subClasses, classData, individuals, relations
           case 'Class':
             break
           case 'ObjectOneOf':
-            console.log('insude object one of', subClasses[i][key][0])
             let oneOf = []
             let namedIndividuals = subClasses[i][key][0].NamedIndividual
 
             for (let i = 0; i < namedIndividuals.length; ++i) {
               let individual = namedIndividuals[i].$
               let individualName = individual.abbreviatedIRI
-              console.log('inside object one of', individual, individualName)
 
               if (!individuals[individualName]) {
                 individuals[individualName] = individual
@@ -99,6 +97,49 @@ export const getSubClassDetails = (subClasses, classData, individuals, relations
             let concept = {}
             concept[key] = dealWithConcepts(subClasses[i][key][0], classData, individuals, relations) // TODO:: pre-process the subclass recursively...
             classData[classOneName].properties['SubClassOf'].push(concept)
+        }
+      }
+    }
+  }
+}
+
+export const getEquivalentClasses = (equivalentClasses, classData, individuals, relations) => {
+  console.log('running equivalent classes')
+  for (let i = 0; i< equivalentClasses.length; ++i) {
+    setupClass(equivalentClasses[i].Class[0].$, classData)
+    let classOneName = equivalentClasses[i].Class[0].$.abbreviatedIRI
+
+    if (!classData[classOneName].properties['EquivalentClasses'])
+      classData[classOneName].properties['EquivalentClasses'] = []
+
+    if (equivalentClasses[i].Class.length > 1) {
+      classData[classOneName].properties['EquivalentClasses'].push(equivalentClasses[i].Class[1].$.abbreviatedIRI)
+      setupClass(equivalentClasses[i].Class[1].$, classData)
+    } else {
+      for (let key in equivalentClasses[i]) {
+        switch (key){
+          case 'Class':
+            break
+          case 'ObjectOneOf':
+            let oneOf = []
+            let namedIndividuals = equivalentClasses[i][key][0].NamedIndividual
+
+            for (let i = 0; i < namedIndividuals.length; ++i) {
+              let individual = namedIndividuals[i].$
+              let individualName = individual.abbreviatedIRI
+
+              if (!individuals[individualName]) {
+                individuals[individualName] = individual
+                individuals[individualName].alias = getClassAlias(individualName)
+              }
+              oneOf.push({NamedIndividual: individualName})
+            }
+            classData[classOneName].properties['EquivalentClasses'].push({ObjectUnionOf: oneOf})
+            break;
+          default:
+            let concept = {}
+            concept[key] = dealWithConcepts(equivalentClasses[i][key][0], classData, individuals, relations) // TODO:: pre-process the subclass recursively...
+            classData[classOneName].properties['EquivalentClasses'].push(concept)
         }
       }
     }
@@ -120,7 +161,7 @@ export const loadOwlString = owlString => (dispatch) => {
     let individuals = {}
     let relations = {}
     getSubClassDetails(owlJSON.Ontology.SubClassOf, classData, individuals, relations)
-
+    getEquivalentClasses(owlJSON.Ontology.EquivalentClasses, classData, individuals, relations)
     dispatch({
       type: types.SET_INDIVIDUALS,
       individuals
