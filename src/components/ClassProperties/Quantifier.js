@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react'
 import Class from '../../containers/Class'
+import Relation from '../../containers/Relation'
 
 const Quantifier  = ({ partOfStatement, quantifierObj, quantifierType /*TODO:: not currently doing something*/, classInfo }) => {
   const {ObjectSomeValuesFrom} = quantifierObj
   return (
     <span>
-      {partOfStatement? '' : 'Something ' }that {ObjectSomeValuesFrom.ObjectProperty.abbreviatedIRI} a <Class  displayClass={ObjectSomeValuesFrom.Class}/>
+      {partOfStatement? '' : 'Something ' }that <Relation displayRelation={ObjectSomeValuesFrom.ObjectProperty.abbreviatedIRI}/> a <Class  displayClass={ObjectSomeValuesFrom.Class}/>
     </span>
   )
 }
