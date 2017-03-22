@@ -40,9 +40,6 @@ export const dealWithConcepts = (conceptJSON, classData, individuals, relations)
         }
         newConcept.push({ObjectSomeValuesFrom: someValuesFrom})
         break;
-        // let someValuesFrom = {
-        //   class: conceptJSON.ObjectSomeValuesFrom.Class[i]
-        // }
       default:
         newConcept[key] = conceptJSON[key][0]
     }
@@ -50,31 +47,59 @@ export const dealWithConcepts = (conceptJSON, classData, individuals, relations)
   return newConcept
 }
 
+export const transformObjectOneOf = (subClasses, classData, individuals, relations) => {
+
+}
+
 export const getSubClassDetails = (subClasses, classData, individuals, relations) => {
   for (let i = 0; i< subClasses.length; ++i) {
-    if (!classData[subClasses[i].Class[0].$.abbreviatedIRI]) {
-      classData[subClasses[i].Class[0].$.abbreviatedIRI] = subClasses[i].Class[0].$
-      classData[subClasses[i].Class[0].$.abbreviatedIRI].alias = getClassAlias(subClasses[i].Class[0].$.abbreviatedIRI)
+    let classOne = subClasses[i].Class[0].$
+    let classOneName = subClasses[i].Class[0].$.abbreviatedIRI
+
+    if (!classData[classOneName]) {
+      classData[classOneName] = classOne
+      classData[classOneName].alias = getClassAlias(classOneName)
     }
 
-    if (!classData[subClasses[i].Class[0].$.abbreviatedIRI].properties)
-      classData[subClasses[i].Class[0].$.abbreviatedIRI].properties = {}
+    if (!classData[classOneName].properties)
+      classData[classOneName].properties = {}
 
-    if (!classData[subClasses[i].Class[0].$.abbreviatedIRI].properties['SubClassOf'])
-      classData[subClasses[i].Class[0].$.abbreviatedIRI].properties['SubClassOf'] = []
+    if (!classData[classOneName].properties['SubClassOf'])
+      classData[classOneName].properties['SubClassOf'] = []
 
     if (subClasses[i].Class.length > 1) {
-      classData[subClasses[i].Class[0].$.abbreviatedIRI].properties['SubClassOf'].push(subClasses[i].Class[1].$.abbreviatedIRI)
+      classData[classOneName].properties['SubClassOf'].push(subClasses[i].Class[1].$.abbreviatedIRI)
       if (!classData[subClasses[i].Class[1].$.abbreviatedIRI]) {
         classData[subClasses[i].Class[1].$.abbreviatedIRI] = subClasses[i].Class[1].$
         classData[subClasses[i].Class[1].$.abbreviatedIRI].alias = getClassAlias(subClasses[i].Class[1].$.abbreviatedIRI)
       }
     } else {
-      for(let key in subClasses[i]) {
-        if (key != "Class"){
-          let concept = {}
-          concept[key] = dealWithConcepts(subClasses[i][key][0], classData, individuals, relations) // TODO:: pre-process the subclass recursively...
-          classData[subClasses[i].Class[0].$.abbreviatedIRI].properties['SubClassOf'].push(concept)
+      for (let key in subClasses[i]) {
+        switch (key){
+          case 'Class':
+            break
+          case 'ObjectOneOf':
+            console.log('insude object one of', subClasses[i][key][0])
+            let oneOf = []
+            let namedIndividuals = subClasses[i][key][0].NamedIndividual
+
+            for (let i = 0; i < namedIndividuals.length; ++i) {
+              let individual = namedIndividuals[i].$
+              let individualName = individual.abbreviatedIRI
+              console.log('inside object one of', individual, individualName)
+
+              if (!individuals[individualName]) {
+                individuals[individualName] = individual
+                individuals[individualName].alias = getClassAlias(individualName)
+              }
+              oneOf.push({NamedIndividual: individualName})
+            }
+            classData[classOneName].properties['SubClassOf'].push({ObjectUnionOf: oneOf})
+            break;
+          default:
+            let concept = {}
+            concept[key] = dealWithConcepts(subClasses[i][key][0], classData, individuals, relations) // TODO:: pre-process the subclass recursively...
+            classData[classOneName].properties['SubClassOf'].push(concept)
         }
       }
     }
