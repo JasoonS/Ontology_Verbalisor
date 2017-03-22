@@ -22,7 +22,10 @@ export const dealWithConcepts = (conceptJSON, classData, individuals, relations)
         for (let i = 0; i < conceptJSON.ObjectSomeValuesFrom.length; ++i) {
           for(let prop in conceptJSON.ObjectSomeValuesFrom[i]) {
             if (prop === 'ObjectProperty') {
-              relations[conceptJSON.ObjectSomeValuesFrom[i].ObjectProperty[0].$] = conceptJSON.ObjectSomeValuesFrom[i].ObjectProperty[0]
+              if (!relations[conceptJSON.ObjectSomeValuesFrom[i][prop][0].$.abbreviatedIRI]) {
+                relations[conceptJSON.ObjectSomeValuesFrom[i][prop][0].$.abbreviatedIRI] = conceptJSON.ObjectSomeValuesFrom[i][prop][0].$
+                relations[conceptJSON.ObjectSomeValuesFrom[i][prop][0].$.abbreviatedIRI].alias = getClassAlias(conceptJSON.ObjectSomeValuesFrom[i][prop][0].$.abbreviatedIRI)
+              }
               someValuesFrom.ObjectProperty = conceptJSON.ObjectSomeValuesFrom[i].ObjectProperty[0].$
             } else if (prop === 'Class'){
               someValuesFrom[prop] = conceptJSON.ObjectSomeValuesFrom[i][prop][0].$.abbreviatedIRI
@@ -94,6 +97,14 @@ export const loadOwlString = owlString => (dispatch) => {
     let relations = {}
     getSubClassDetails(owlJSON.Ontology.SubClassOf, classData, individuals, relations)
 
+    dispatch({
+      type: types.SET_INDIVIDUALS,
+      individuals
+    })
+    dispatch({
+      type: types.SET_RELATIONS,
+      relations
+    })
     dispatch({
       type: types.SET_CLASS_DATA,
       classData

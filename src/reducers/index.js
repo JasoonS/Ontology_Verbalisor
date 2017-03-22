@@ -13,6 +13,10 @@ const reducer = (state = initialState, action) => {
       return {...state, loadedJSON: action.owlJSON}
     case types.SET_CLASS_DATA:
       return {...state, classData: action.classData}
+    case types.SET_INDIVIDUALS:
+      return {...state, individuals: action.individuals}
+    case types.SET_RELATIONS:
+      return {...state, relations: action.relations}
     default:
       return state
   }
