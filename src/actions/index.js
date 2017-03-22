@@ -2,6 +2,21 @@ import * as types from '../constants/ActionTypes'
 import {parseString} from 'xml2js'
 import {getClassAlias} from '../util'
 
+export const setupClass = (classToSet, classData) => {
+  let classToSetName = classToSet.abbreviatedIRI
+
+  if (!classData[classToSetName]) {
+    classData[classToSetName] = classToSet
+    classData[classToSetName].alias = getClassAlias(classToSetName)
+  }
+
+  if (!classData[classToSetName].properties)
+    classData[classToSetName].properties = {}
+
+  if (!classData[classToSetName].properties['SubClassOf'])
+    classData[classToSetName].properties['SubClassOf'] = []
+}
+
 export const dealWithConcepts = (conceptJSON, classData, individuals, relations) => {
   let newConcept = []
 
@@ -29,6 +44,8 @@ export const dealWithConcepts = (conceptJSON, classData, individuals, relations)
               someValuesFrom.ObjectProperty = conceptJSON.ObjectSomeValuesFrom[i].ObjectProperty[0].$
             } else if (prop === 'Class'){
               someValuesFrom[prop] = conceptJSON.ObjectSomeValuesFrom[i][prop][0].$.abbreviatedIRI
+              // setupClass(conceptJSON.ObjectSomeValuesFrom[i][prop][0].$)
+
               if (!classData[conceptJSON.ObjectSomeValuesFrom[i][prop][0].$.abbreviatedIRI]) {
                 classData[conceptJSON.ObjectSomeValuesFrom[i][prop][0].$.abbreviatedIRI] = conceptJSON.ObjectSomeValuesFrom[i][prop][0].$
                 classData[conceptJSON.ObjectSomeValuesFrom[i][prop][0].$.abbreviatedIRI].alias = getClassAlias(conceptJSON.ObjectSomeValuesFrom[i][prop][0].$.abbreviatedIRI)
@@ -47,32 +64,14 @@ export const dealWithConcepts = (conceptJSON, classData, individuals, relations)
   return newConcept
 }
 
-export const transformObjectOneOf = (subClasses, classData, individuals, relations) => {
-
-}
-
 export const getSubClassDetails = (subClasses, classData, individuals, relations) => {
   for (let i = 0; i< subClasses.length; ++i) {
-    let classOne = subClasses[i].Class[0].$
+    setupClass(subClasses[i].Class[0].$, classData)
     let classOneName = subClasses[i].Class[0].$.abbreviatedIRI
-
-    if (!classData[classOneName]) {
-      classData[classOneName] = classOne
-      classData[classOneName].alias = getClassAlias(classOneName)
-    }
-
-    if (!classData[classOneName].properties)
-      classData[classOneName].properties = {}
-
-    if (!classData[classOneName].properties['SubClassOf'])
-      classData[classOneName].properties['SubClassOf'] = []
 
     if (subClasses[i].Class.length > 1) {
       classData[classOneName].properties['SubClassOf'].push(subClasses[i].Class[1].$.abbreviatedIRI)
-      if (!classData[subClasses[i].Class[1].$.abbreviatedIRI]) {
-        classData[subClasses[i].Class[1].$.abbreviatedIRI] = subClasses[i].Class[1].$
-        classData[subClasses[i].Class[1].$.abbreviatedIRI].alias = getClassAlias(subClasses[i].Class[1].$.abbreviatedIRI)
-      }
+      setupClass(subClasses[i].Class[1].$, classData)
     } else {
       for (let key in subClasses[i]) {
         switch (key){
