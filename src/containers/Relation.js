@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 
 
 const Relation = ({ relations, displayRelation }) => {
-  console.log('relatttiiioon', relations)
   return <span>{relations[displayRelation].alias}</span>
 }
 
