@@ -26,25 +26,20 @@ const App = ({ loadOwlString, loadedString }) => {
         </div>
         <div className="half-section right-pannel">
           <h2 className="center-div">OWL to ACE Translation</h2>
+          <div className="spacer"></div>
           <Verbalised/>
-          <button onClick={tospeech}>
-          the speech button </button>
+          <button onClick={tospeech} className="button-styling">To Speech</button>
         </div>
       </div>
     </div>
 )}
 
-document.body.style.backgroundColor = "#2F3241";
-document.body.style.color ="#F9EFC1";
-document.body.style.fontFamily = "sans-serif";
-//document.getElementsByClassName("center-div").style.margin ="auto";
+
 
 App.propTypes = {
   loadOwlString: PropTypes.func.isRequired
 }
-
-const mapStateToProps = state => ({
-
+  const mapStateToProps = state => ({
 })
 
 export default connect(

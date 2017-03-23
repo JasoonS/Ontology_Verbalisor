@@ -16,9 +16,11 @@ const FileUpload  = ({uploadFileFunction}) => {
   return (
     <div className="center-div">
       <h3>Your File Upload Button</h3>
-        <input id='owl-upload' type='file' accept='.owl'
+      <div className="overlay-button">
+        <input id='owl-upload'className="inputfile" type='file' accept='.owl'
         onChange={fileUpload}
         />
+      </div>
     </div>
   )
 }

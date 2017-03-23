@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { changeTab } from '../actions'
+import '../index.css'
 
 const LeftPane  = ({ loadedString, changeTab, tab }) => {
   const displayPane = () => {
@@ -11,11 +12,14 @@ const LeftPane  = ({ loadedString, changeTab, tab }) => {
             {loadedString}
           </pre>
         </div>
-      case 'clicked':
-        TabClicked()
+      case 'attempto':
         return <div className="scroll-box">
-          some shiiiit other tab
+          Attempto tab
         </div>
+      case 'editor':
+          return <div className="scroll-box">
+            Editor tab
+          </div>
       default:
         return <p>unknown pane option</p>
     }
@@ -25,8 +29,11 @@ const LeftPane  = ({ loadedString, changeTab, tab }) => {
     changeTab(what)
   }
   return (<div>
-    {/*Denim addd your shiiiit*/}
-    <button onClick={() => changeTab('clicked')}>click me</button>
+    <div className="tab">
+      <button className="tablinks" onClick={() => changeTab('inputOwl')}>OWL to ACE</button>
+      <button className="tablinks" onClick={() => changeTab('attempto')}>Attempto</button>
+      <button className="tablinks" onClick={() => changeTab('editor')}>Editor</button>
+    </div>
     {displayPane()}
   </div>)
 }
