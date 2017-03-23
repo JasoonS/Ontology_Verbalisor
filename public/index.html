@@ -20,15 +20,132 @@
   </head>
   <body>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+    <div>
+      <div class="form">
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+<form action="http://192.168.0.14:5123" method="post" id="contactForm">
 
-      To begin the development, run `npm start`.
-      To create a production bundle, use `npm run build`.
-    -->
+<div>
+<textarea name="xml" title="OWL ontology in XML syntax" rows="24" cols="80">
+&lt;?xml version="1.0"?>
+&lt;Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://org.semanticweb.ontologies/test"
+         xmlns:xml="http://www.w3.org/XML/1998/namespace">
+
+    &lt;Prefix name="story" IRI="http://www.example.org/story.owl#"/>
+    &lt;Prefix name="ace_lexicon" IRI="http://attempto.ifi.uzh.ch/ace_lexicon#"/>
+
+    &lt;AnnotationAssertion>
+        &lt;AnnotationProperty abbreviatedIRI="ace_lexicon:TV_sg"/>
+                &lt;IRI>http://www.example.org/story.owl#eat&lt;/IRI>
+        &lt;Literal>eats&lt;/Literal>
+    &lt;/AnnotationAssertion>
+
+    &lt;AnnotationAssertion>
+        &lt;AnnotationProperty abbreviatedIRI="ace_lexicon:TV_pl"/>
+                &lt;IRI>http://www.example.org/story.owl#eat&lt;/IRI>
+        &lt;Literal>eat&lt;/Literal>
+    &lt;/AnnotationAssertion>
+
+    &lt;AnnotationAssertion>
+        &lt;AnnotationProperty abbreviatedIRI="ace_lexicon:TV_vbg"/>
+                &lt;IRI>http://www.example.org/story.owl#eat&lt;/IRI>
+        &lt;Literal>eaten&lt;/Literal>
+    &lt;/AnnotationAssertion>
+
+    &lt;AnnotationAssertion>
+        &lt;AnnotationProperty abbreviatedIRI="ace_lexicon:CN_sg"/>
+                &lt;IRI>http://www.example.org/story.owl#hate&lt;/IRI>
+        &lt;Literal>hater&lt;/Literal>
+    &lt;/AnnotationAssertion>
+
+    &lt;AnnotationAssertion>
+        &lt;AnnotationProperty abbreviatedIRI="ace_lexicon:CN_pl"/>
+                &lt;IRI>http://www.example.org/story.owl#leaf&lt;/IRI>
+        &lt;Literal>leaves&lt;/Literal>
+    &lt;/AnnotationAssertion>
+
+    &lt;SubClassOf>
+        &lt;Class abbreviatedIRI="story:animal"/>
+        &lt;ObjectUnionOf>
+            &lt;Class abbreviatedIRI="story:cat"/>
+            &lt;Class abbreviatedIRI="story:goat"/>
+        &lt;/ObjectUnionOf>
+    &lt;/SubClassOf>
+    &lt;EquivalentClasses>
+        &lt;Class abbreviatedIRI="story:goat"/>
+        &lt;ObjectAllValuesFrom>
+            &lt;ObjectProperty abbreviatedIRI="story:eat"/>
+            &lt;Class abbreviatedIRI="story:leaf"/>
+        &lt;/ObjectAllValuesFrom>
+    &lt;/EquivalentClasses>
+    &lt;SubClassOf>
+        &lt;Class abbreviatedIRI="story:human"/>
+        &lt;ObjectIntersectionOf>
+            &lt;Class abbreviatedIRI="story:person"/>
+            &lt;ObjectSomeValuesFrom>
+                &lt;ObjectProperty abbreviatedIRI="story:own"/>
+                &lt;Class abbreviatedIRI="story:automobile"/>
+            &lt;/ObjectSomeValuesFrom>
+        &lt;/ObjectIntersectionOf>
+    &lt;/SubClassOf>
+    &lt;SubClassOf>
+        &lt;Class abbreviatedIRI="story:human"/>
+        &lt;ObjectOneOf>
+            &lt;NamedIndividual abbreviatedIRI="story:John"/>
+            &lt;NamedIndividual abbreviatedIRI="story:Mary"/>
+        &lt;/ObjectOneOf>
+    &lt;/SubClassOf>
+    &lt;SubClassOf>
+        &lt;Class abbreviatedIRI="story:man"/>
+        &lt;Class abbreviatedIRI="story:person"/>
+    &lt;/SubClassOf>
+    &lt;FunctionalObjectProperty>
+        &lt;ObjectProperty abbreviatedIRI="story:eat"/>
+    &lt;/FunctionalObjectProperty>
+    &lt;InverseFunctionalObjectProperty>
+        &lt;ObjectProperty abbreviatedIRI="story:eat"/>
+    &lt;/InverseFunctionalObjectProperty>
+    &lt;TransitiveObjectProperty>
+        &lt;ObjectProperty abbreviatedIRI="story:eat"/>
+    &lt;/TransitiveObjectProperty>
+    &lt;ObjectPropertyDomain>
+        &lt;ObjectProperty abbreviatedIRI="story:eat"/>
+        &lt;Class abbreviatedIRI="story:animal"/>
+    &lt;/ObjectPropertyDomain>
+    &lt;ObjectPropertyRange>
+        &lt;ObjectProperty abbreviatedIRI="story:eat"/>
+        &lt;ObjectIntersectionOf>
+            &lt;Class abbreviatedIRI="story:food"/>
+            &lt;ObjectComplementOf>
+                &lt;Class abbreviatedIRI="story:automobile"/>
+            &lt;/ObjectComplementOf>
+        &lt;/ObjectIntersectionOf>
+    &lt;/ObjectPropertyRange>
+    &lt;InverseObjectProperties>
+        &lt;ObjectProperty abbreviatedIRI="story:hate"/>
+        &lt;ObjectProperty abbreviatedIRI="story:eat"/>
+    &lt;/InverseObjectProperties>
+    &lt;ClassAssertion>
+        &lt;Class abbreviatedIRI="story:man"/>
+        &lt;NamedIndividual abbreviatedIRI="story:John"/>
+    &lt;/ClassAssertion>
+    &lt;SubClassOf>
+        &lt;ObjectUnionOf>
+            &lt;Class abbreviatedIRI="story:apple"/>
+            &lt;Class abbreviatedIRI="story:leaf"/>
+        &lt;/ObjectUnionOf>
+        &lt;Class abbreviatedIRI="story:food"/>
+    &lt;/SubClassOf>
+&lt;/Ontology>
+</textarea>
+</div>
+
+<input type="submit" onsubmit="aceverbfunc()" value="Verbalize" title="Verbalize the ontology!"/>
+</form>
+
+    </div>
+
+  </div>
   </body>
 </html>

@@ -4,6 +4,9 @@ import { changeTab } from '../actions'
 import '../index.css'
 
 const LeftPane  = ({ loadedString, changeTab, tab }) => {
+  const getData = (e) =>{
+    console.log("something kosher", e)
+  }
   const displayPane = () => {
     switch (tab) {
       case 'inputOwl':
@@ -14,11 +17,29 @@ const LeftPane  = ({ loadedString, changeTab, tab }) => {
         </div>
       case 'attempto':
         return <div className="scroll-box">
-          Attempto tab
+
+
+
+        <div class="form">
+
+  <form action="http://192.168.0.14:5123" method="post" id="form">
+
+  <div>
+  <textarea name="xml" title="OWL ontology in XML syntax" rows="24" cols="80">
+    {loadedString}
+  </textarea>
+  </div>
+
+  <input type="submit" onSubmit={getData(e)} value="Verbalize" title="Verbalize the ontology!"/>
+  </form>
+
+
+
+      </div>
         </div>
       case 'editor':
           return <div className="scroll-box">
-            Editor tab
+
           </div>
       default:
         return <p>unknown pane option</p>
