@@ -206,3 +206,10 @@ export const loadOwlString = owlString => (dispatch) => {
     // console.log(JSON.stringify(owlJSON))
   })
 }
+
+export const changeTab = tabName => (dispatch) => {
+  dispatch({
+    type: types.CHANGE_TAB,
+    tabName
+  })
+}

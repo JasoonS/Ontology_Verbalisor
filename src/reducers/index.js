@@ -2,7 +2,9 @@ import * as types from '../constants/ActionTypes'
 
 const initialState = {
   loadedString: "",
-  ui: {}
+  ui: {
+    leftTab: 'inputOwl'
+  }
 }
 
 const reducer = (state = initialState, action) => {
@@ -17,6 +19,9 @@ const reducer = (state = initialState, action) => {
       return {...state, individuals: action.individuals}
     case types.SET_RELATIONS:
       return {...state, relations: action.relations}
+    case types.CHANGE_TAB:
+      const newUI = {...state.ui, leftTab: action.tabName}
+      return {...state, ui: newUI}
     default:
       return state
   }
