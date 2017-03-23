@@ -19,7 +19,6 @@ const Class  = ({ classData, displayClass, extra, individuals }) => {
         case 'ObjectUnionOf':
           return <span>something that is a <ClassRec displayClass={displayClass[type][0]} /> or that is a <ClassRec displayClass={displayClass[type][1]} /></span>
         default:
-          console.log('we have a named concept:', displayClass[type], type)
           return <span>COMPOUND_CONCEPT</span>
       }
     }

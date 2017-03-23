@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import Class from '../containers/Class'
+import Relation from '../containers/Relation'
 
 const ClassSentence  = ({ classInfo }) => {
   const {properties} = classInfo
@@ -14,9 +15,11 @@ const ClassSentence  = ({ classInfo }) => {
           )
         case 'EquivalentClasses':
           return properties.EquivalentClasses.map((concept, i) =>
-            <p key={index + i*numProps}>Every <Class displayClass={classInfo.abbreviatedIRI}/> is a <Class displayClass={concept}/>.
-              <br/>Every <Class displayClass={concept}/> is a <Class displayClass={classInfo.abbreviatedIRI}/>.</p>
+            concept.map((equivalent, j) =>
+              <p key={index + i*numProps}>Everything that is <Relation displayRelation={equivalent.ObjectAllValuesFrom.ObjectProperty.abbreviatedIRI}/> by <Class displayClass={classInfo.abbreviatedIRI}/> is a <Class displayClass={equivalent.ObjectAllValuesFrom.Class}/>.
+              <br/>Everything that <Relation displayRelation={equivalent.ObjectAllValuesFrom.ObjectProperty.abbreviatedIRI}/> nothing but <Class displayClass={equivalent.ObjectAllValuesFrom.Class}/> is a <Class displayClass={classInfo.abbreviatedIRI}/>.</p>
             )
+          )
         default:
           return <p key={index}>We cannot recognise the definition of {propertyName} on {classInfo.abbreviatedIRI}</p>
       }

@@ -54,6 +54,32 @@ export const dealWithConcepts = (conceptJSON, classData, individuals, relations)
         }
         newConcept.push({ObjectSomeValuesFrom: someValuesFrom})
         break;
+      case 'ObjectAllValuesFrom':
+        let allValuesFrom = {}
+
+        for (let i = 0; i < conceptJSON.ObjectAllValuesFrom.length; ++i) {
+          for(let prop in conceptJSON.ObjectAllValuesFrom[i]) {
+            if (prop === 'ObjectProperty') {
+              if (!relations[conceptJSON.ObjectAllValuesFrom[i][prop][0].$.abbreviatedIRI]) {
+                relations[conceptJSON.ObjectAllValuesFrom[i][prop][0].$.abbreviatedIRI] = conceptJSON.ObjectAllValuesFrom[i][prop][0].$
+                relations[conceptJSON.ObjectAllValuesFrom[i][prop][0].$.abbreviatedIRI].alias = getClassAlias(conceptJSON.ObjectAllValuesFrom[i][prop][0].$.abbreviatedIRI)
+              }
+              allValuesFrom.ObjectProperty = conceptJSON.ObjectAllValuesFrom[i].ObjectProperty[0].$
+            } else if (prop === 'Class'){
+              allValuesFrom[prop] = conceptJSON.ObjectAllValuesFrom[i][prop][0].$.abbreviatedIRI
+              // setupClass(conceptJSON.ObjectAllValuesFrom[i][prop][0].$)
+
+              if (!classData[conceptJSON.ObjectAllValuesFrom[i][prop][0].$.abbreviatedIRI]) {
+                classData[conceptJSON.ObjectAllValuesFrom[i][prop][0].$.abbreviatedIRI] = conceptJSON.ObjectAllValuesFrom[i][prop][0].$
+                classData[conceptJSON.ObjectAllValuesFrom[i][prop][0].$.abbreviatedIRI].alias = getClassAlias(conceptJSON.ObjectAllValuesFrom[i][prop][0].$.abbreviatedIRI)
+              }
+            } else {
+              allValuesFrom[prop] = dealWithConcepts(conceptJSON.ObjectAllValuesFrom[i][prop][0], classData, individuals, relations)
+            }
+          }
+        }
+        newConcept.push({ObjectAllValuesFrom: allValuesFrom})
+        break;
       default:
         newConcept[key] = conceptJSON[key][0]
     }
@@ -104,7 +130,6 @@ export const getSubClassDetails = (subClasses, classData, individuals, relations
 }
 
 export const getEquivalentClasses = (equivalentClasses, classData, individuals, relations) => {
-  console.log('running equivalent classes')
   for (let i = 0; i< equivalentClasses.length; ++i) {
     setupClass(equivalentClasses[i].Class[0].$, classData)
     let classOneName = equivalentClasses[i].Class[0].$.abbreviatedIRI
@@ -135,6 +160,10 @@ export const getEquivalentClasses = (equivalentClasses, classData, individuals, 
               oneOf.push({NamedIndividual: individualName})
             }
             classData[classOneName].properties['EquivalentClasses'].push({ObjectUnionOf: oneOf})
+            break;
+          case 'ObjectAllValuesFrom':
+            const objConcept = dealWithConcepts({ObjectAllValuesFrom: equivalentClasses[i][key]}, classData, individuals, relations) // TODO:: pre-process the subclass recursively...
+            classData[classOneName].properties['EquivalentClasses'].push(objConcept)
             break;
           default:
             let concept = {}
