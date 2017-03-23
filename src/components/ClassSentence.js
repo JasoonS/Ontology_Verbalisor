@@ -11,13 +11,13 @@ const ClassSentence  = ({ classInfo }) => {
       switch(propertyName) {
         case 'SubClassOf':
           return properties.SubClassOf.map((concept, i) =>
-            <p key={index + i*numProps}>Every <Class displayClass={classInfo.abbreviatedIRI}/> is a <Class displayClass={concept}/>.</p>
+            <p key={index + i*numProps}>Every <Class displayClass={classInfo.abbreviatedIRI}/> is <Class displayClass={concept}/>.</p>
           )
         case 'EquivalentClasses':
           return properties.EquivalentClasses.map((concept, i) =>
             concept.map((equivalent, j) =>
-              <p key={index + i*numProps}>Everything that is <Relation displayRelation={equivalent.ObjectAllValuesFrom.ObjectProperty.abbreviatedIRI}/> by <Class displayClass={classInfo.abbreviatedIRI}/> is a <Class displayClass={equivalent.ObjectAllValuesFrom.Class}/>.
-              <br/>Everything that <Relation displayRelation={equivalent.ObjectAllValuesFrom.ObjectProperty.abbreviatedIRI}/> nothing but <Class displayClass={equivalent.ObjectAllValuesFrom.Class}/> is a <Class displayClass={classInfo.abbreviatedIRI}/>.</p>
+              <p key={index + i*numProps}>Everything that is <Relation displayRelation={equivalent.ObjectAllValuesFrom.ObjectProperty.abbreviatedIRI}/> by <Class displayClass={classInfo.abbreviatedIRI}/> is <Class displayClass={equivalent.ObjectAllValuesFrom.Class}/>.
+              <br/>Everything that <Relation displayRelation={equivalent.ObjectAllValuesFrom.ObjectProperty.abbreviatedIRI}/> nothing but <Class displayClass={equivalent.ObjectAllValuesFrom.Class}/> is <Class displayClass={classInfo.abbreviatedIRI}/>.</p>
             )
           )
         default:

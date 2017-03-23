@@ -6,7 +6,7 @@ const Quantifier  = ({ partOfStatement, quantifierObj, quantifierType /*TODO:: n
   const {ObjectSomeValuesFrom} = quantifierObj
   return (
     <span>
-      {partOfStatement? '' : 'Something ' }that <Relation displayRelation={ObjectSomeValuesFrom.ObjectProperty.abbreviatedIRI}/> a <Class  displayClass={ObjectSomeValuesFrom.Class}/>
+      {partOfStatement? '' : 'Something ' }that <Relation displayRelation={ObjectSomeValuesFrom.ObjectProperty.abbreviatedIRI}/> <Class  displayClass={ObjectSomeValuesFrom.Class}/>
     </span>
   )
 }
