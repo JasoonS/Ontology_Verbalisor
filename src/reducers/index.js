@@ -22,6 +22,17 @@ const reducer = (state = initialState, action) => {
     case types.CHANGE_TAB:
       const newUI = {...state.ui, leftTab: action.tabName}
       return {...state, ui: newUI}
+    case types.CLICK_CLASS:
+      let oldArray = state.classData
+      console.log('in REDUCER', oldArray[action.className])
+      let selectedClass
+      if (!!state.selectedClass) {
+        selectedClass = state.selectedClass
+      } else {
+        selectedClass = [action.className]
+      }
+      selectedClass.push()
+      return {...state, classData: oldArray, selectedClass}
     default:
       return state
   }

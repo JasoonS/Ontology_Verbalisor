@@ -4,11 +4,23 @@ import Relation from '../../containers/Relation'
 
 const Quantifier  = ({ partOfStatement, quantifierObj, quantifierType /*TODO:: not currently doing something*/, classInfo }) => {
   const {ObjectSomeValuesFrom} = quantifierObj
-  return (
-    <span>
-      {partOfStatement? '' : 'Something ' }that <Relation displayRelation={ObjectSomeValuesFrom.ObjectProperty.abbreviatedIRI}/> <Class  displayClass={ObjectSomeValuesFrom.Class}/>
-    </span>
-  )
+
+  if (!ObjectSomeValuesFrom.ObjectProperty) {
+    console.log('quantifier', ObjectSomeValuesFrom)
+  }
+  if (!!ObjectSomeValuesFrom.ObjectInverseOf) {
+    return (
+      <span>
+        The other thing...
+      </span>
+    )
+  } else {
+    return (
+      <span>
+        {partOfStatement? '' : 'Something ' }that <Relation displayRelation={ObjectSomeValuesFrom.ObjectProperty.abbreviatedIRI}/> <Class  displayClass={ObjectSomeValuesFrom.Class}/>
+      </span>
+    )
+  }
 }
 
 Quantifier.propTypes = {

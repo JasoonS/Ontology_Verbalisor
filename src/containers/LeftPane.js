@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { changeTab } from '../actions'
-import '../index.css'
+import ClassEditor from './ClassEditor'
 
 const LeftPane  = ({ loadedString, changeTab, tab }) => {
   const getData = () =>{
@@ -37,7 +37,7 @@ const LeftPane  = ({ loadedString, changeTab, tab }) => {
         </div>
       case 'editor':
           return <div className="scroll-box">
-            Editor tab
+            <ClassEditor/>
           </div>
       default:
         return <p>unknown pane option</p>
