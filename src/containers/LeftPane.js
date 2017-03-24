@@ -49,7 +49,7 @@ const LeftPane  = ({ loadedString, changeTab, tab }) => {
   }
   return (<div>
     <div className="tab">
-      <button className="tablinks" onClick={() => changeTab('inputOwl')}>OWL to ACE</button>
+      <button className="tablinks" onClick={() => changeTab('inputOwl')}>OWL</button>
       <button className="tablinks" onClick={() => changeTab('attempto')}>Attempto</button>
       <button className="tablinks" onClick={() => changeTab('editor')}>Editor</button>
     </div>

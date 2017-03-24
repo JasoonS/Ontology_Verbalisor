@@ -25,7 +25,7 @@ const App = ({ loadOwlString, loadedString }) => {
         <FileUpload className="bottom center-div" uploadFileFunction={loadOwlString}/>
         </div>
         <div className="half-section right-pannel">
-          <h2 className="center-div">OWL to ACE Translation</h2>
+          <h2 className="center-div">OWL to JDJ Translation</h2>
           <div className="spacer"></div>
           <Verbalised/>
           <button onClick={tospeech} className="button-styling">To Speech</button>
