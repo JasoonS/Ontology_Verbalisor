@@ -20,6 +20,6 @@ export const getClassAlias = (originalString) => {
 
 export const getClassArticle = (classAlias) => {
   const f = classAlias[0].toUpperCase()
-  console.log(f)
+  // console.log(f)
   return ((f == "A" || f == "E" || f == "I" || f == "O" || f == "U") ? 'an' : 'a')
 }

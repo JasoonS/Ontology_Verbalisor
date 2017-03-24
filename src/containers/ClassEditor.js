@@ -1,11 +1,15 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { removeAndSomething, getClassEditorArticle } from '../util'
-import { changeName } from '../actions'
+import { changeName, changeColour } from '../actions'
 
-const ClassEditor  = ({ classData, selectedClass }) => {
-  const nameChange = (e) => {
-    console.log(e.target.vector)
+const ClassEditor  = ({ classData, selectedClass, changeName, changeColour }) => {
+  const nameChange = (e, name) => {
+    if (!!e.target.value)
+      changeName(name, e.target.value)
+  }
+  const colorChange = (name, colour) => {
+    changeColour(name, colour)
   }
   let classes = (!!selectedClass? selectedClass.map((name, i) => {
     return (<div key={i}>
@@ -15,12 +19,12 @@ const ClassEditor  = ({ classData, selectedClass }) => {
       <p>
       -----------------
       </p>
-      <button>red</button>
-      <button>green</button>
-      <button>blue</button>
+      <button onClick={() => colorChange(name, 'red')}>red</button>
+      <button onClick={() => colorChange(name, 'green')}>green</button>
+      <button onClick={() => colorChange(name, 'blue')}>blue</button>
       <p>
         Set Class name
-        <input onChange={nameChange}/>
+        <input onChange={(e) => nameChange(e, name)}/>
       </p>
     </div>)
 }
@@ -29,7 +33,6 @@ const ClassEditor  = ({ classData, selectedClass }) => {
  )
   return (
     <div>
-      hello
       {classes}
     </div>
   )
@@ -46,7 +49,7 @@ const mapStateToProps = ({classData, individuals, selectedClass}) => ({
 })
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
   // TODO:: create this action for advanced interaction
-  { changeName }
+  { changeName, changeColour }
 )(ClassEditor)

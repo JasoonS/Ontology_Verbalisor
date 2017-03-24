@@ -321,3 +321,18 @@ export const classClicked = className => (dispatch) => {
     className
   })
 }
+
+export const changeName = (className, newName) => (dispatch) => {
+  dispatch({
+    type: types.CLASS_NAME_CHANGE,
+    className,
+    newName
+  })
+}
+export const changeColour = (className, newColour) => (dispatch) => {
+  dispatch({
+    type: types.CLASS_NAME_CHANGE,
+    className,
+    newColour
+  })
+}

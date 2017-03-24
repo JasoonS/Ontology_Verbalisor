@@ -23,16 +23,23 @@ const reducer = (state = initialState, action) => {
       const newUI = {...state.ui, leftTab: action.tabName}
       return {...state, ui: newUI}
     case types.CLICK_CLASS:
-      let oldArray = state.classData
-      console.log('in REDUCER', oldArray[action.className])
+      let oldArray = JSON.parse(JSON.stringify(state.classData))
       let selectedClass
       if (!!state.selectedClass) {
         selectedClass = state.selectedClass
       } else {
-        selectedClass = [action.className]
+        selectedClass = []
       }
-      selectedClass.push()
-      return {...state, classData: oldArray, selectedClass}
+      selectedClass.push(action.className)
+      return {...state, classData: oldArray, selectedClass: selectedClass}
+    case types.CLASS_NAME_CHANGE:
+      let oldClass = JSON.parse(JSON.stringify(state.classData))
+      oldClass[action.className].alias = action.newName
+      return {...state, classData: oldClass}
+    case types.CLASS_COLOUR_CHANGE:
+      let oldClas = JSON.parse(JSON.stringify(state.classData))
+      oldClas[action.className].stlye = {color: action.newColour}
+      return {...state, classData: oldClas}
     default:
       return state
   }
